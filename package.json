@@ -1,0 +1,13 @@
+{
+  "name": "ragnaplace-discord",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:sergiovilar/ragnaplace-discord.git",
+  "author": "Sergio Vilar <sergiovilar.r@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "dotenv": "^4.0.0",
+    "request": "^2.83.0"
+  }
+}
