@@ -13,9 +13,9 @@ client.on('ready', () => {
 });
 
 // Database
-commands.register('item', (input, message) => new Item(input, message))
-commands.register('mob', (input, message) => new Mob(input, message))
-commands.register('map', (input, message) => new Map(input, message))
+commands.register('item', (input, message) => new Item(input, message).answer())
+commands.register('mob', (input, message) => new Mob(input, message).answer())
+commands.register('map', (input, message) => new Map(input, message).answer())
 
 // Help
 const help = (input, message) => {

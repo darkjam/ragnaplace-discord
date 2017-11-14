@@ -6,14 +6,16 @@ class RagnaPlace {
     this.input = input
     this.message = message
     this.namespace = this.getNamespace()
+  }
 
+  answer() {
     this.search((result) => {
       if(!result) {
-        message.reply('não é possível encontrar nenhum item para o termo especificado.')
+        this.message.reply('não é possível encontrar nenhum item para o termo especificado.')
         return
       }
 
-      message.channel.send("Resultado da busca por '"+input+"': \n"+ result)
+      this.message.channel.send("Resultado da busca por '"+this.input+"': \n"+ result)
     })
   }
 
@@ -23,9 +25,10 @@ class RagnaPlace {
 
   search(callback) {
     let results
+      , result = false
 
     request({
-      url: `https://www.ragnaplace.com/${this.namespace}-search?q=${this.input}`,
+      url: `https://www.ragnaplace.com/${this.namespace}-search?q=${encodeURIComponent(this.input)}`,
       headers: {
         'Referer': 'https://www.ragnaplace.com/',
         'Authority': 'www.ragnaplace.com',
@@ -33,13 +36,19 @@ class RagnaPlace {
       }
     }, (error, response, body)  => {
       results = JSON.parse(body)
-
+      console.log(results)
       if(results === null) {
         callback(false)
         return
       }
 
-      callback(`https://www.ragnaplace.com/${this.namespace}/${results[0].id}`)
+      results.forEach((res) => {
+        if(res.id.split('/')[0] == this.input) result = res
+      })
+
+      if(!result) result = results[0]
+
+      callback(`https://www.ragnaplace.com/${this.namespace}/${result.id}`)
     })
   }
 
